@@ -10,6 +10,10 @@ struct Node {
 // Insert at beginning
 void insertAtBeginning(struct Node** head, int newData) {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
     newNode->data = newData;
     newNode->next = *head;
     *head = newNode;
@@ -18,6 +22,10 @@ void insertAtBeginning(struct Node** head, int newData) {
 // Insert at end
 void insertAtEnd(struct Node** head, int newData) {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
     newNode->data = newData;
     newNode->next = NULL;
 
@@ -36,9 +44,13 @@ void insertAtEnd(struct Node** head, int newData) {
 // Insert at the middle (given position)
 void insertAtMiddle(struct Node** head, int newData, int position) {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
     newNode->data = newData;
 
-    if (*head == NULL || position <= 1) { // Insert at beginning if empty or position is 1
+    if (*head == NULL || position <= 1) {
         newNode->next = *head;
         *head = newNode;
         return;
@@ -49,7 +61,7 @@ void insertAtMiddle(struct Node** head, int newData, int position) {
         temp = temp->next;
     }
 
-    if (temp == NULL) { // If position is beyond the last node, insert at the end
+    if (temp == NULL) {
         printf("Position out of range. Inserting at the end.\n");
         insertAtEnd(head, newData);
         return;
@@ -90,6 +102,16 @@ void deleteNode(struct Node** head, int key) {
     free(temp);
 }
 
+// Free the entire linked list
+void freeList(struct Node** head) {
+    struct Node* temp;
+    while (*head != NULL) {
+        temp = *head;
+        *head = (*head)->next;
+        free(temp);
+    }
+}
+
 // Main function
 int main() {
     struct Node* head = NULL;
@@ -99,7 +121,6 @@ int main() {
     insertAtBeginning(&head, 1);
     insertAtEnd(&head, 4);
     insertAtEnd(&head, 5);
-    
 
     printf("Linked List: ");
     printList(head);
@@ -108,5 +129,8 @@ int main() {
     printf("After Deleting 3: ");
     printList(head);
 
+    // Free the allocated memory
+    freeList(&head);
+    
     return 0;
 }
