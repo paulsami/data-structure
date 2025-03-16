@@ -2,11 +2,11 @@
 
 // Function to perform binary search
 int binarySearch(int arr[], int size, int key) {
-    int low = 0;
-    int high = size - 1;
+    int start = 0;
+    int end = size - 1;
 
-    while (low <= high) {
-        int mid = low + (high - low) / 2;  // Calculate middle index
+    while (start <= end) {
+        int mid = start + (end - start) / 2;  // Calculate middle index
 
         // Check if key is present at mid
         if (arr[mid] == key) {
@@ -15,11 +15,11 @@ int binarySearch(int arr[], int size, int key) {
 
         // If key is smaller, search in the left half
         if (arr[mid] > key) {
-            high = mid - 1;
+            end = mid - 1;
         }
         // If key is larger, search in the right half
         else {
-            low = mid + 1;
+            start = mid + 1;
         }
     }
 
