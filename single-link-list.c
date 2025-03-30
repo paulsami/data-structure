@@ -84,18 +84,18 @@ void printList(struct Node* head) {
 // Delete a node
 void deleteNode(struct Node** head, int key) {
     struct Node* temp = *head, *prev = NULL;
-
+ // Consider the start of the  list to be deleted
     if (temp != NULL && temp->data == key) {
         *head = temp->next;
         free(temp);
         return;
     }
-
+// other case
     while (temp != NULL && temp->data != key) {
         prev = temp;
         temp = temp->next;
     }
-
+// No  key found
     if (temp == NULL) return;
 
     prev->next = temp->next;
